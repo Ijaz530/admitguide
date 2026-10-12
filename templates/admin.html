@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdmitGuide Admin — Universities</title><link rel="stylesheet" href="/static/style.css"></head>
+<body>
+<div class="admin-page">
+  <header class="admin-head">
+    <h2>🎓 Universities <small>({{ total }})</small></h2>
+    <div>
+      <button id="saveBtn" class="save">💾 Save to Excel</button>
+      <a href="/admin/logout" class="logout">Logout</a>
+    </div>
+  </header>
+  <p class="hint">Kisi bhi cell par click kar ke edit karen, phir <b>Save</b> dabayen. Save se pehle purani file ka backup <code>universities.backup.xlsx</code> ban jata hai.</p>
+  <div class="table-scroll">
+  <table id="utable">
+    <thead><tr>{% for c in columns %}<th>{{ c }}</th>{% endfor %}</tr></thead>
+    <tbody>
+      {% for u in universities %}
+      <tr>{% for c in columns %}<td contenteditable="true">{{ u[c] if u[c] is not none else "" }}</td>{% endfor %}</tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+<script>
+document.getElementById("saveBtn").onclick = async () => {
+  const rows=[...document.querySelectorAll("#utable tbody tr")]
+    .map(tr=>[...tr.querySelectorAll("td")].map(td=>td.innerText.trim()));
+  const b=document.getElementById("saveBtn"); b.textContent="⏳ Saving...";
+  const r=await fetch("/admin/save",{method:"POST",
+    headers:{"Content-Type":"application/json"},body:JSON.stringify({rows})});
+  const d=await r.json();
+  b.textContent="💾 Save to Excel";
+  alert(d.ok ? "✅ "+d.saved+" universities save ho gayin!" : "❌ "+(d.error||"error"));
+};
+</script>
+</body></html>

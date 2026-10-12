@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdmitGuide Chat</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="chat-wrap">
+  <header class="chat-head">
+    <a href="/" class="back">←</a>
+    <div class="cht"><div class="clogo">🎓</div><div><b>AdmitGuide</b><small>AI admission consultant • online</small></div></div>
+  </header>
+
+  <div id="msgs" class="msgs"></div>
+  <div id="quick" class="quick"></div>
+
+  <div class="inputbar">
+    <input id="inp" type="text" placeholder="Yahan likhen..." autocomplete="off">
+    <button id="send">➤</button>
+  </div>
+</div>
+
+<script>
+let session_id = localStorage.getItem("ag_sid") || "";
+const msgs = document.getElementById("msgs");
+const quick = document.getElementById("quick");
+const inp = document.getElementById("inp");
+
+function esc(s){ const d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
+function md(s){ // chhota markdown: **bold** aur newlines
+  return esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/\n/g,"<br>");
+}
+function scrollDown(){ msgs.scrollTop = msgs.scrollHeight; }
+
+function bubble(html, mine){
+  const d=document.createElement("div");
+  d.className="bubble "+(mine?"mine":"theirs");
+  d.innerHTML=html;
+  msgs.appendChild(d); scrollDown();
+  return d;
+}
+
+function cardHTML(c){
+  let links="";
+  if(c.website) links+=`<a href="${esc(c.website)}" target="_blank">🌐 Official Website</a>`;
+  if(c.email)   links+=`<a href="mailto:${esc(c.email)}">✉️ ${esc(c.email)}</a>`;
+  if(c.phone)   links+=`<a href="tel:${esc(c.phone.replace(/[^+\d]/g,""))}">📞 ${esc(c.phone)}</a>`;
+  return `<div class="ucard">
+    <div class="uhead"><b>${esc(c.name)}</b><span class="ucountry">${esc(c.country)}</span></div>
+    <div class="umeta">📍 ${esc(c.city)} &nbsp; 🏆 Rank #${esc(String(c.rank))} &nbsp; 💰 ${esc(c.tuition)}/saal</div>
+    <div class="umeta">🎓 IELTS: ${esc(String(c.ielts))} &nbsp; 🎁 ${esc(c.scholarship)}</div>
+    <div class="uwhy">${esc(c.why)}</div>
+    <div class="ulinks">${links}</div>
+  </div>`;
+}
+
+function showButtons(btns){
+  quick.innerHTML="";
+  (btns||[]).forEach(b=>{
+    const el=document.createElement("button");
+    el.className="qbtn"; el.textContent=b.label;
+    el.onclick=()=>send(b.payload,true);
+    quick.appendChild(el);
+  });
+}
+
+let typingEl=null;
+function showTyping(){
+  typingEl=document.createElement("div");
+  typingEl.className="bubble theirs typing";
+  typingEl.innerHTML="<span></span><span></span><span></span>";
+  msgs.appendChild(typingEl); scrollDown();
+}
+function hideTyping(){ if(typingEl){typingEl.remove(); typingEl=null;} }
+
+async function send(text, silent){
+  text=(text||"").trim();
+  if(!text) return;
+  if(!silent) bubble(esc(text), true);
+  inp.value=""; showTyping();
+  try{
+    const r=await fetch("/api/chat",{method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({session_id, message:text})});
+    const d=await r.json();
+    hideTyping();
+    session_id=d.session_id; localStorage.setItem("ag_sid",session_id);
+    bubble(md(d.reply||"..."), false);
+    (d.cards||[]).forEach(c=>bubble(cardHTML(c), false));
+    showButtons(d.buttons);
+  }catch(e){ hideTyping(); bubble("⚠️ Server se rabta nahi ho saka. Dobara koshish karen.", false); }
+}
+
+document.getElementById("send").onclick=()=>send(inp.value);
+inp.addEventListener("keydown",e=>{ if(e.key==="Enter") send(inp.value); });
+
+// Pehla sawal
+send("START", true);
+</script>
+</body>
+</html>

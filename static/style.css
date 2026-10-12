@@ -1,0 +1,75 @@
+/* AdmitGuide — clean modern styling */
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#f4f7fb;color:#1e293b;line-height:1.5}
+
+/* ---------- Landing page ---------- */
+.landing{max-width:960px;margin:0 auto;padding:24px 16px}
+.hero{text-align:center;background:linear-gradient(135deg,#0d6e5f,#12836f);color:#fff;border-radius:20px;padding:48px 24px;margin-bottom:28px}
+.hero .logo{font-size:56px}
+.hero h1{font-size:44px;letter-spacing:1px}
+.tagline{opacity:.92;margin:8px 0 20px;font-size:18px}
+.stats{display:flex;gap:28px;justify-content:center;margin-bottom:24px}
+.stat b{display:block;font-size:28px}.stat span{font-size:13px;opacity:.85}
+.cta{display:inline-block;background:#ffb703;color:#1e293b;font-weight:700;font-size:18px;
+  padding:14px 34px;border-radius:50px;text-decoration:none;margin:6px;box-shadow:0 4px 14px rgba(0,0,0,.2)}
+.cta:hover{transform:translateY(-2px)}
+.countries{margin-top:18px;font-size:14px;opacity:.9}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:28px}
+.feature{background:#fff;border-radius:14px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.feature .fi{font-size:30px}.feature h3{margin:8px 0 4px;font-size:17px}.feature p{font-size:14px;color:#64748b}
+.how{background:#fff;border-radius:20px;padding:32px 24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.how h2{margin-bottom:18px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:22px}
+.step b{display:inline-block;background:#0d6e5f;color:#fff;width:32px;height:32px;line-height:32px;border-radius:50%;margin-bottom:8px}
+.step p{font-size:14px;color:#64748b}
+footer{text-align:center;color:#94a3b8;font-size:13px;margin-top:28px}
+
+/* ---------- Chat page ---------- */
+.chat-wrap{max-width:720px;margin:0 auto;height:100vh;display:flex;flex-direction:column;background:#fff}
+.chat-head{display:flex;align-items:center;gap:12px;background:#0d6e5f;color:#fff;padding:12px 16px}
+.chat-head .back{color:#fff;text-decoration:none;font-size:20px}
+.cht{display:flex;align-items:center;gap:10px}
+.clogo{font-size:28px;background:#fff;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center}
+.cht small{display:block;font-size:11px;opacity:.85}
+.msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:#eef3f7}
+.bubble{max-width:82%;padding:10px 14px;border-radius:16px;font-size:15px;word-wrap:break-word}
+.bubble.mine{align-self:flex-end;background:#0d6e5f;color:#fff;border-bottom-right-radius:4px}
+.bubble.theirs{align-self:flex-start;background:#fff;border-bottom-left-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.typing span{display:inline-block;width:8px;height:8px;background:#94a3b8;border-radius:50%;margin:0 2px;animation:tp 1s infinite}
+.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+@keyframes tp{0%,100%{opacity:.3}50%{opacity:1}}
+.quick{display:flex;gap:8px;padding:8px 12px;overflow-x:auto;background:#eef3f7}
+.qbtn{white-space:nowrap;border:1px solid #0d6e5f;color:#0d6e5f;background:#fff;border-radius:20px;padding:8px 14px;font-size:14px;cursor:pointer}
+.qbtn:hover{background:#0d6e5f;color:#fff}
+.inputbar{display:flex;gap:8px;padding:12px;background:#fff;border-top:1px solid #e2e8f0}
+.inputbar input{flex:1;border:1px solid #cbd5e1;border-radius:24px;padding:12px 16px;font-size:15px;outline:none}
+.inputbar input:focus{border-color:#0d6e5f}
+.inputbar button{background:#0d6e5f;color:#fff;border:none;border-radius:50%;width:46px;height:46px;font-size:18px;cursor:pointer}
+
+/* ---------- University cards in chat ---------- */
+.ucard{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;margin:2px 0;max-width:100%}
+.uhead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
+.uhead b{font-size:15px}
+.ucountry{background:#e0f2f1;color:#0d6e5f;font-size:12px;font-weight:700;padding:2px 10px;border-radius:12px}
+.umeta{font-size:13px;color:#64748b;margin-bottom:2px}
+.uwhy{font-size:13px;background:#f0fdf9;border-left:3px solid #0d6e5f;padding:6px 10px;margin:8px 0;border-radius:0 8px 8px 0}
+.ulinks{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.ulinks a{font-size:13px;color:#0d6e5f;text-decoration:none;border:1px solid #cbd5e1;border-radius:16px;padding:4px 10px}
+.ulinks a:hover{background:#0d6e5f;color:#fff}
+
+/* ---------- Admin ---------- */
+.admin-login{max-width:360px;margin:80px auto;background:#fff;padding:32px;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,.1);text-align:center}
+.admin-login input{width:100%;padding:12px;margin:16px 0;border:1px solid #cbd5e1;border-radius:8px;font-size:15px}
+.admin-login button{background:#0d6e5f;color:#fff;border:none;padding:12px 32px;border-radius:8px;font-size:16px;cursor:pointer}
+.hint{font-size:13px;color:#94a3b8;margin-top:12px}
+.admin-page{padding:16px}
+.admin-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px}
+.admin-head small{color:#94a3b8}
+.save{background:#0d6e5f;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-size:15px;cursor:pointer}
+.logout{color:#ef4444;text-decoration:none;margin-left:12px;font-size:14px}
+.table-scroll{overflow:auto;max-height:75vh;border:1px solid #e2e8f0;border-radius:8px;background:#fff}
+#utable{border-collapse:collapse;font-size:12px;min-width:2200px}
+#utable th{background:#0d6e5f;color:#fff;padding:8px;position:sticky;top:0;white-space:nowrap}
+#utable td{border:1px solid #e2e8f0;padding:6px 8px;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#utable td:focus{background:#fef9c3;outline:2px solid #ffb703;white-space:normal}
+#utable tr:nth-child(even) td{background:#f8fafc}
